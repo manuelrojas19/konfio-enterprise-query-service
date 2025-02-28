@@ -29,7 +29,7 @@ export class EnterpriseService {
 
     if (!ValidationUtils.isValidTaxId(taxId)) {
       this.logger.error(`Invalid taxId: ${taxId} for enterprise: ${name}`);
-      throw new Error(`Invalid taxId: ${type}`);
+      throw new Error(`Invalid taxId: ${taxId}`);
     }
 
     const newEnterprise = new Enterprise(
