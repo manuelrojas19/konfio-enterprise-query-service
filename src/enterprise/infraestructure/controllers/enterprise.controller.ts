@@ -1,5 +1,5 @@
 // src/enterprise/infrastructure/controllers/enterprise.controller.ts
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { EnterpriseService } from '../../application/services/enterprise.service';
 
 @Controller('/enterprises')
@@ -20,5 +20,10 @@ export class EnterpriseController {
   @Get()
   async findAll() {
     return this.enterpriseService.findAll();
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    return this.enterpriseService.findById(id);
   }
 }
