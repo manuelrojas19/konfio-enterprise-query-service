@@ -1,10 +1,15 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EnterpriseRepositoryPort } from '../../application/ports/enterprise.repository.port';
-import { Enterprise } from 'src/enterprise/domain/models/entity/enterprise.entity';
+import {
+  Enterprise,
+  EnterpriseType,
+} from 'src/enterprise/domain/models/entity/enterprise.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { ValidationUtils } from '../utils/validations.utils';
 
 @Injectable()
 export class EnterpriseService {
+  private readonly logger = new Logger(ValidationUtils.name);
   constructor(
     @Inject('EnterpriseRepositoryPort')
     private readonly enterpriseRepository: EnterpriseRepositoryPort,
@@ -15,10 +20,22 @@ export class EnterpriseService {
     type: string,
     taxId: string,
   ): Promise<Enterprise> {
+    if (!ValidationUtils.isValidEnterpriseType(type)) {
+      this.logger.error(
+        `Invalid enterprise type: ${type} for enterprise: ${name}`,
+      );
+      throw new Error(`Invalid enterprise type: ${type}`);
+    }
+
+    if (!ValidationUtils.isValidTaxId(taxId)) {
+      this.logger.error(`Invalid taxId: ${taxId} for enterprise: ${name}`);
+      throw new Error(`Invalid taxId: ${type}`);
+    }
+
     const newEnterprise = new Enterprise(
       uuidv4(), // Generate a random UUID
       name,
-      type,
+      type as EnterpriseType,
       taxId,
       new Date(),
       new Date(),
@@ -36,6 +53,4 @@ export class EnterpriseService {
     const enterprise = await this.enterpriseRepository.findAll();
     return enterprise;
   }
-
-  // Otros casos de uso como update, delete, etc.
 }
