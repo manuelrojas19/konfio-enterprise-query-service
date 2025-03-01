@@ -55,4 +55,11 @@ export class EnterpriseService {
     // Map each enterprise entity to an EnterpriseDto
     return enterprises.map((e) => MapperUtils.enterpriseEntityToDto(e));
   }
+
+  async findAllByPartyId(partyId: string): Promise<EnterpriseDto[] | null> {
+    const enterprises = await this.enterpriseRepository.findAllEnterprisesByPartyId(partyId);
+
+    // Map each enterprise entity to an EnterpriseDto
+    return enterprises.map((e) => MapperUtils.enterpriseEntityToDto(e));
+  }
 }
