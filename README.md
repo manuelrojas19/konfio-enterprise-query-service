@@ -75,7 +75,7 @@ $ npm run start:dev
 
 #### Enterprises:
 
-To register a new enterprise, you can use the following `curl` command:
+To register a new enterprise, you can use the following `curl` command, you must provide a valid Mexican Tax ID (RFC):
 
 ```bash
 curl -X POST http://localhost:3000/enterprises \
