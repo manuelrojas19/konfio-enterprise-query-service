@@ -97,7 +97,7 @@ curl -X GET http://localhost:3000/enterprises/1 \
   -H "Content-Type: application/json" 
 ```
 
-To Update Enterprise by id, you can use the following `curl` command:
+To Update Enterprise by id, you can use the following `curl` command, you must provide a valid Mexican Tax ID (RFC) and a previously created enterprise:
 
 ```bash
 curl -X PUT http://localhost:3000/enterprises/1 \
