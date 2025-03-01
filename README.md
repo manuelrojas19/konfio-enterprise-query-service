@@ -156,6 +156,7 @@ curl -X GET http://localhost:3000/enterprises/1/parties \
 
 Following Next Steps
 
+- Implement soft delete endpoints
 - Add swagger documentation.
 - Implement CICD infraestructure
 - Implement possible Infraestructure as a code to release this on AWS.
