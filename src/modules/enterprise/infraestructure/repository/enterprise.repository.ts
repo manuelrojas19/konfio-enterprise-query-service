@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { EnterpriseRepositoryPort } from 'src/enterprise/application/ports/enterprise.repository.port';
-import { Enterprise } from 'src/enterprise/domain/models/entity/enterprise.entity';
+import { EnterpriseRepositoryPort } from 'src/modules/enterprise/application/ports/enterprise.repository.port';
+import { Enterprise } from 'src/modules/enterprise/domain/models/entity/enterprise.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()

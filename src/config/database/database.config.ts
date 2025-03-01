@@ -1,6 +1,6 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Enterprise } from 'src/enterprise/domain/models/entity/enterprise.entity';
+import { Enterprise } from 'src/modules/enterprise/domain/models/entity/enterprise.entity';
 
 // Properties
 export default () => ({
