@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Logger,
@@ -19,9 +20,16 @@ export class PartyController {
   @Post(':id/parties')
   async addParty(
     @Param('id') enterpriseId: string,
-    @Body() partyData: CreatePartyDto,
+    @Body() createPartyDto: CreatePartyDto,
   ) {
-    partyData.enterpriseId = enterpriseId;
-    return this.partyService.createParty(partyData);
+    createPartyDto.enterpriseId = enterpriseId;
+    return this.partyService.createParty(createPartyDto);
+  }
+
+  @Get(':enterpriseId/parties')
+  async findPartiesByEnterpriseId(
+    @Param('enterpriseId') enterpriseId: string
+  ) {
+    return this.partyService.findPartiesByEnterpriseId(enterpriseId);
   }
 }

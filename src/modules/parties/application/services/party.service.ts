@@ -21,19 +21,7 @@ export class PartyService {
 
   async createParty(createPartyDto: CreatePartyDto): Promise<PartyDto> {
     // Check if enterprise exist before update
-    const enterpriseExists =
-      await this.enterpriseRepository.existsEnterpriseById(
-        createPartyDto.enterpriseId,
-      );
-
-    if (!enterpriseExists) {
-      this.logger.error(
-        `Enterprise with ID ${createPartyDto.enterpriseId} does not exist.`,
-      );
-      throw new Error(
-        `Enterprise with ID ${createPartyDto.enterpriseId} does not exist.`,
-      );
-    }
+    await this.enterpriseExists(createPartyDto.enterpriseId);
 
     const enterprise = await this.enterpriseRepository.findByEnterpriseId(
       createPartyDto.enterpriseId,
@@ -51,7 +39,20 @@ export class PartyService {
     return this.partyRepository.updateParty(party);
   }
 
-  async getPartiesByEnterpriseId(enterpriseId: string): Promise<Party[]> {
-    return this.partyRepository.findAllPartiesByEnterpriseId(enterpriseId);
+  async findPartiesByEnterpriseId(enterpriseId: string): Promise<PartyDto[]> {
+    await this.enterpriseExists(enterpriseId);
+    const parties =
+      await this.partyRepository.findAllPartiesByEnterpriseId(enterpriseId);
+    return parties.map((p) => MapperUtils.partyEntityToDto(p));
+  }
+
+  private async enterpriseExists(enterpriseId: string) {
+    const enterpriseExists =
+      await this.enterpriseRepository.existsEnterpriseById(enterpriseId);
+
+    if (!enterpriseExists) {
+      this.logger.error(`Enterprise with ID ${enterpriseId} does not exist.`);
+      throw new Error(`Enterprise with ID ${enterpriseId} does not exist.`);
+    }
   }
 }
