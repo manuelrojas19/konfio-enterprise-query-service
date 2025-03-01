@@ -1,8 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Party } from '../../domain/entity/party.entity';
-import { PartyRepository } from '../../infraestructure/repository/party.repository';
 import { CreatePartyDto } from '../../domain/dto/createrParty.dto';
-import { EnterpriseRepository } from 'src/modules/enterprises/infraestructure/repository/enterprise.repository';
 import MapperUtils from '../utils/mapper.utils';
 import { PartyDto } from '../../domain/dto/party.dto';
 import { EnterpriseRepositoryPort } from 'src/modules/enterprises/application/ports/enterprise.repository.port';
@@ -39,13 +37,10 @@ export class PartyService {
   async updateParty(updatePartyDto: UpdatePartyDto): Promise<PartyDto> {
     await this.enterpriseExists(updatePartyDto.enterpriseId);
 
-    const adjustedParty = new Party(
-      updatePartyDto.name
-    );
+    const adjustedParty = new Party(updatePartyDto.name);
     adjustedParty.id = updatePartyDto.id;
 
-    const updatedEntity =
-      await this.partyRepository.updateParty(adjustedParty);
+    const updatedEntity = await this.partyRepository.updateParty(adjustedParty);
 
     return MapperUtils.partyEntityToDto(updatedEntity);
   }
@@ -67,3 +62,4 @@ export class PartyService {
     }
   }
 }
+

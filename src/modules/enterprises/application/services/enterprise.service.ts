@@ -92,3 +92,4 @@ export class EnterpriseService {
     return enterprises.map((e) => MapperUtils.enterpriseEntityToDto(e));
   }
 }
+

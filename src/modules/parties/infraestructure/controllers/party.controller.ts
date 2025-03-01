@@ -44,3 +44,4 @@ export class PartyController {
     return this.partyService.updateParty(updatePartyDto);
   }
 }
+
