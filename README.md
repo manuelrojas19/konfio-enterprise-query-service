@@ -156,14 +156,15 @@ curl -X GET http://localhost:3000/enterprises/1/parties \
 
 Following Next Steps
 
-- Implement soft delete endpoints
+- Implement soft delete endpoints.
+- Implement proper error handling.
 - Add swagger documentation.
-- Implement CICD infraestructure
+- Implement CICD infraestructure.
 - Implement possible Infraestructure as a code to release this on AWS.
-- Unit Testing
-- Logging and Monitoring
-- Integration and Perf Test
-- Explit this API in two separated components, one for reading and one for updates to implement CQRS pattern
+- Unit Testing.
+- Enforce Logging and Monitoring.
+- Integration and Perf Test.
+- Explit this API in two separated components, one for reading and one for updates to implement CQRS pattern.
 
 ## Support
 
