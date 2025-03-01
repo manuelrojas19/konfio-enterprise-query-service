@@ -1,13 +1,14 @@
-import { EnterpriseDto } from 'src/modules/enterprise/domain/models/dto/enterprise.dto';
-import { Enterprise } from 'src/modules/enterprise/domain/models/entity/enterprise.entity';
+import { EnterpriseDto } from 'src/modules/enterprises/domain/models/dto/enterprise.dto';
+import { Enterprise } from 'src/modules/enterprises/domain/models/entity/enterprise.entity';
 
-export class MapperUtils {
+export default class MapperUtils {
   // Mapper function to convert from Entity to DTO
   static enterpriseEntityToDto(enterprise: Enterprise): EnterpriseDto {
     return new EnterpriseDto(
       enterprise.id,
       enterprise.name,
       enterprise.type,
+      enterprise.parties,
       enterprise.taxId,
       enterprise.createdAt,
       enterprise.updatedAt,

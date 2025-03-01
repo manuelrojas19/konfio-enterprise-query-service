@@ -1,6 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Enterprise } from 'src/modules/enterprise/domain/models/entity/enterprise.entity';
+import { Enterprise } from 'src/modules/enterprises/domain/models/entity/enterprise.entity';
+import { Party } from 'src/modules/parties/domain/entity/party.entity';
 
 // Properties
 export default () => ({
@@ -23,7 +24,7 @@ export const databaseConfigFactory = (
   username: configService.get<string>('DATABASE_USER'),
   password: configService.get<string>('DATABASE_PASSWORD'),
   database: configService.get<string>('DATABASE_NAME'),
-  entities: [Enterprise],
+  entities: [Enterprise, Party],
   synchronize: configService.get<string>('NODE_ENV') !== 'production', // Disable in production
   logging: true,
 });

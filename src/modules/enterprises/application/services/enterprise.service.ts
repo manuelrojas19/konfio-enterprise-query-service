@@ -5,9 +5,10 @@ import { ValidationUtils } from '../utils/validations.utils';
 import {
   EnterpriseDto,
   EnterpriseType,
-} from 'src/modules/enterprise/domain/models/dto/enterprise.dto';
-import { Enterprise } from 'src/modules/enterprise/domain/models/entity/enterprise.entity';
-import { MapperUtils } from '../utils/mapper.utils';
+} from 'src/modules/enterprises/domain/models/dto/enterprise.dto';
+import { Enterprise } from 'src/modules/enterprises/domain/models/entity/enterprise.entity';
+import MapperUtils from '../utils/mapper.utils';
+
 
 @Injectable()
 export class EnterpriseService {
@@ -50,6 +51,13 @@ export class EnterpriseService {
 
   async findAll(): Promise<EnterpriseDto[] | null> {
     const enterprises = await this.enterpriseRepository.findAllEnterprises();
+
+    // Map each enterprise entity to an EnterpriseDto
+    return enterprises.map((e) => MapperUtils.enterpriseEntityToDto(e));
+  }
+
+  async findAllByPartyId(partyId: string): Promise<EnterpriseDto[] | null> {
+    const enterprises = await this.enterpriseRepository.findAllEnterprisesByPartyId(partyId);
 
     // Map each enterprise entity to an EnterpriseDto
     return enterprises.map((e) => MapperUtils.enterpriseEntityToDto(e));

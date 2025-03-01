@@ -1,9 +1,12 @@
 // src/enterprise/infrastructure/controllers/enterprise.controller.ts
 import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { EnterpriseService } from '../../application/services/enterprise.service';
+import { CreatePartyDto } from 'src/modules/parties/domain/dto/createrParty.dto';
+import { PartyService } from 'src/modules/parties/application/services/party.service';
 
 @Controller('/enterprises')
 export class EnterpriseController {
+
   constructor(private readonly enterpriseService: EnterpriseService) {}
 
   @Post()
