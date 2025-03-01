@@ -1,11 +1,13 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { EnterpriseRepositoryPort } from '../../application/ports/enterprise.repository.port';
-import {
-  Enterprise,
-  EnterpriseType,
-} from 'src/enterprise/domain/models/entity/enterprise.entity';
-import { v4 as uuidv4 } from 'uuid';
+
 import { ValidationUtils } from '../utils/validations.utils';
+import {
+  EnterpriseDto,
+  EnterpriseType,
+} from 'src/enterprise/domain/models/dto/enterprise.dto';
+import { Enterprise } from 'src/enterprise/domain/models/entity/enterprise.entity';
+import { MapperUtils } from '../utils/mapper.utils';
 
 @Injectable()
 export class EnterpriseService {
@@ -19,7 +21,7 @@ export class EnterpriseService {
     name: string,
     type: string,
     taxId: string,
-  ): Promise<Enterprise> {
+  ): Promise<EnterpriseDto> {
     if (!ValidationUtils.isValidEnterpriseType(type)) {
       this.logger.error(
         `Invalid enterprise type: ${type} for enterprise: ${name}`,
@@ -32,25 +34,24 @@ export class EnterpriseService {
       throw new Error(`Invalid taxId: ${taxId}`);
     }
 
-    const newEnterprise = new Enterprise(
-      uuidv4(), // Generate a random UUID
-      name,
-      type as EnterpriseType,
-      taxId,
-      new Date(),
-      new Date(),
-    );
-    return this.enterpriseRepository.save(newEnterprise);
+    const newEnterprise = new Enterprise(name, type as EnterpriseType, taxId);
+    const savedEnterprise =
+      await this.enterpriseRepository.saveEnterprise(newEnterprise);
+    return MapperUtils.enterpriseEntityToDto(savedEnterprise);
   }
 
-  async findById(enterpriseId: string): Promise<Enterprise | null> {
+  async findById(enterpriseId: string): Promise<EnterpriseDto | null> {
     const enterprise =
       await this.enterpriseRepository.findByEnterpriseId(enterpriseId);
-    return enterprise;
+
+    // Map enterprise entity to an EnterpriseDto
+    return MapperUtils.enterpriseEntityToDto(enterprise!);
   }
 
-  async findAll(): Promise<Enterprise[] | null> {
-    const enterprise = await this.enterpriseRepository.findAll();
-    return enterprise;
+  async findAll(): Promise<EnterpriseDto[] | null> {
+    const enterprises = await this.enterpriseRepository.findAllEnterprises();
+
+    // Map each enterprise entity to an EnterpriseDto
+    return enterprises.map((e) => MapperUtils.enterpriseEntityToDto(e));
   }
 }

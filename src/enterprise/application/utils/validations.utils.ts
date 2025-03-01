@@ -1,5 +1,5 @@
-import { EnterpriseType } from 'src/enterprise/domain/models/entity/enterprise.entity';
 import { Logger } from '@nestjs/common';
+import { EnterpriseType } from 'src/enterprise/domain/models/dto/enterprise.dto';
 
 export class ValidationUtils {
   private readonly logger = new Logger(ValidationUtils.name);

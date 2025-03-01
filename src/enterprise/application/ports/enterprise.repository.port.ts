@@ -1,7 +1,7 @@
-import { Enterprise } from '../../domain/models/entity/enterprise.entity';
+import { Enterprise } from 'src/enterprise/domain/models/entity/enterprise.entity';
 
 export interface EnterpriseRepositoryPort {
-  save(party: Enterprise): Promise<Enterprise>;
-  findAll(): Promise<Enterprise[]>;
-  findByEnterpriseId(enterpriseId: string): Promise<Enterprise>;
+  saveEnterprise(enterprise: Enterprise): Promise<Enterprise>;
+  findAllEnterprises(): Promise<Enterprise[]>;
+  findByEnterpriseId(enterpriseId: string): Promise<Enterprise | null>;
 }
