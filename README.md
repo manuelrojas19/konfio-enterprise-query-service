@@ -59,7 +59,7 @@ DATABASE_NAME=enterprise-command-db
 
 This file contains the necessary environment variables for your database setup and development environment matching some dummy values provided on docker compose file. Make sure to add it to your .gitignore file to prevent it from being pushed to your repository.
 
-### 4. Compile and run the project
+### 4. Compile and run the project (local)
 
 ```bash
 # development
@@ -68,23 +68,8 @@ $ npm run start
 # watch mode
 $ npm run start:dev
 
-# production mode
-$ npm run start:prod
 ```
 
-
-### 4. Usage
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
 
 ### 5. API Endpoints CURL Commands
 
