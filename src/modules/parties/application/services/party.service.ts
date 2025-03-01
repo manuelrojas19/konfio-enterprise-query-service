@@ -1,12 +1,11 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Party } from '../../domain/entity/party.entity';
-import { PartyRepository } from '../../infraestructure/repository/party.repository';
 import { CreatePartyDto } from '../../domain/dto/createrParty.dto';
-import { EnterpriseRepository } from 'src/modules/enterprises/infraestructure/repository/enterprise.repository';
 import MapperUtils from '../utils/mapper.utils';
 import { PartyDto } from '../../domain/dto/party.dto';
 import { EnterpriseRepositoryPort } from 'src/modules/enterprises/application/ports/enterprise.repository.port';
 import { PartyRepositoryPort } from '../ports/party.repository.port';
+import { UpdatePartyDto } from '../../domain/dto/updateParty.dto';
 
 @Injectable()
 export class PartyService {
@@ -35,8 +34,15 @@ export class PartyService {
     return MapperUtils.partyEntityToDto(savedParty);
   }
 
-  async updateParty(party: Party): Promise<Party> {
-    return this.partyRepository.updateParty(party);
+  async updateParty(updatePartyDto: UpdatePartyDto): Promise<PartyDto> {
+    await this.enterpriseExists(updatePartyDto.enterpriseId);
+
+    const adjustedParty = new Party(updatePartyDto.name);
+    adjustedParty.id = updatePartyDto.id;
+
+    const updatedEntity = await this.partyRepository.updateParty(adjustedParty);
+
+    return MapperUtils.partyEntityToDto(updatedEntity);
   }
 
   async findPartiesByEnterpriseId(enterpriseId: string): Promise<PartyDto[]> {
@@ -56,3 +62,4 @@ export class PartyService {
     }
   }
 }
+

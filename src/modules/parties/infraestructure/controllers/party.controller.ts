@@ -7,9 +7,11 @@ import {
   Logger,
   Param,
   Post,
+  Put,
 } from '@nestjs/common';
 import { PartyService } from '../../application/services/party.service';
 import { CreatePartyDto } from '../../domain/dto/createrParty.dto';
+import { UpdatePartyDto } from '../../domain/dto/updateParty.dto';
 
 @Controller('enterprises')
 export class PartyController {
@@ -27,9 +29,19 @@ export class PartyController {
   }
 
   @Get(':enterpriseId/parties')
-  async findPartiesByEnterpriseId(
-    @Param('enterpriseId') enterpriseId: string
-  ) {
+  async findPartiesByEnterpriseId(@Param('enterpriseId') enterpriseId: string) {
     return this.partyService.findPartiesByEnterpriseId(enterpriseId);
   }
+
+  @Put(':enterpriseId/parties/:partyId')
+  async updateParty(
+    @Param('enterpriseId') enterpriseId: string,
+    @Param('partyId') partyId: string,
+    @Body() updatePartyDto: UpdatePartyDto,
+  ) {
+    updatePartyDto.id = partyId;
+    updatePartyDto.enterpriseId = enterpriseId;
+    return this.partyService.updateParty(updatePartyDto);
+  }
 }
+
