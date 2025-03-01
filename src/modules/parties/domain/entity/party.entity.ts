@@ -12,7 +12,15 @@ export class Party {
   @ManyToMany(() => Enterprise, (enterprise) => enterprise.parties)
   enterprises: Enterprise[];
 
+  @Column({ type: 'timestamp' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp' })
+  updatedAt: Date;
+
   constructor(name: string) {
     this.name = name;
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
   }
 }

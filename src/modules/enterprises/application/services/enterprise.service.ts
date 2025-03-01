@@ -7,7 +7,8 @@ import {
   EnterpriseType,
 } from 'src/modules/enterprises/domain/models/dto/enterprise.dto';
 import { Enterprise } from 'src/modules/enterprises/domain/models/entity/enterprise.entity';
-import { MapperUtils } from '../utils/mapper.utils';
+import MapperUtils from '../utils/mapper.utils';
+
 
 @Injectable()
 export class EnterpriseService {

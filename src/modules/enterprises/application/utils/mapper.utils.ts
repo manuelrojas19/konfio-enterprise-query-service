@@ -1,7 +1,7 @@
 import { EnterpriseDto } from 'src/modules/enterprises/domain/models/dto/enterprise.dto';
 import { Enterprise } from 'src/modules/enterprises/domain/models/entity/enterprise.entity';
 
-export class MapperUtils {
+export default class MapperUtils {
   // Mapper function to convert from Entity to DTO
   static enterpriseEntityToDto(enterprise: Enterprise): EnterpriseDto {
     return new EnterpriseDto(

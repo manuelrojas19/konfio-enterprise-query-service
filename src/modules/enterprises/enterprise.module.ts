@@ -15,5 +15,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       useClass: EnterpriseRepository, // Map the interface to the implementation
     },
   ],
+  exports: [
+    {
+      provide: 'EnterpriseRepositoryPort',
+      useClass: EnterpriseRepository, // Export the provider so it's available in other modules
+    },
+  ],
 })
 export class EnterpriseModule {}

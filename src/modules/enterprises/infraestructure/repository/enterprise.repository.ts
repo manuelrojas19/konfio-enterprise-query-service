@@ -11,6 +11,21 @@ export class EnterpriseRepository implements EnterpriseRepositoryPort {
     private readonly ormRepository: Repository<Enterprise>,
   ) {}
 
+  async existsEnterpriseById(enterpriseId: string): Promise<boolean> {
+    const count = await this.ormRepository.count({
+      where: { id: enterpriseId },
+    });
+    return count > 0;  // Returns true if the enterprise exists, false otherwise
+  }
+
+  async findAllEnterprisesByPartyId(partyId: string): Promise<Enterprise[]> {
+    return this.ormRepository
+      .createQueryBuilder('enterprise')
+      .innerJoin('enterprise.parties', 'party')
+      .where('party.id = :partyId', { partyId })
+      .getMany();
+  }
+  
   async saveEnterprise(enterprise: Enterprise): Promise<Enterprise> {
     return this.ormRepository.save(enterprise);
   }
