@@ -1,5 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import { EnterpriseType } from '../dto/enterprise.dto';
+import { Party } from 'src/modules/parties/domain/entity/party.entity';
 // Assume you have this enum defined elsewhere
 
 @Entity()
@@ -15,6 +22,10 @@ export class Enterprise {
 
   @Column({ type: 'varchar', length: 20 })
   taxId: string;
+
+  @ManyToMany(() => Party, (party) => party.enterprises)
+  @JoinTable()
+  parties: Party[];
 
   @Column({ type: 'timestamp' })
   createdAt: Date;
