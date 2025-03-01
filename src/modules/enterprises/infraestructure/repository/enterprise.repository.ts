@@ -31,12 +31,10 @@ export class EnterpriseRepository implements EnterpriseRepositoryPort {
   }
 
   async findAllEnterprises(): Promise<Enterprise[]> {
-    return this.ormRepository.find({
-      relations: ['parties'], // Load related parties for each enterprise
-    });
+    return this.ormRepository.find();
   }
   
   async findByEnterpriseId(id: string): Promise<Enterprise | null> {
-    return this.ormRepository.findOne({ where: { id } });
+    return this.ormRepository.findOne({ where: { id }, relations: ['parties']});
   }
 }
