@@ -59,7 +59,7 @@ DATABASE_NAME=enterprise-command-db
 
 This file contains the necessary environment variables for your database setup and development environment matching some dummy values provided on docker compose file. Make sure to add it to your .gitignore file to prevent it from being pushed to your repository.
 
-## Compile and run the project
+### 4. Compile and run the project
 
 ```bash
 # development
@@ -72,6 +72,85 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+
+### 4. Usage
+
+```bash
+# development
+$ npm run start
+
+# watch mode
+$ npm run start:dev
+
+# production mode
+$ npm run start:prod
+```
+
+### 5. API Endpoints CURL Commands
+
+#### Enterprises:
+
+To register a new enterprise, you can use the following `curl` command:
+
+```bash
+curl -X POST http://localhost:3000/enterprises \
+  -H "Content-Type: application/json" \
+  -d '{"name": "My Enterprise", "type": "Enterprise", "taxId": "GODE561231GR8"}'
+```
+
+To find all enterprises, you can use the following `curl` command:
+
+```bash
+curl -X GET http://localhost:3000/enterprises \
+  -H "Content-Type: application/json" 
+```
+
+To Find Enterprise by id, you can use the following `curl` command:
+
+```bash
+curl -X GET http://localhost:3000/enterprises/1 \
+  -H "Content-Type: application/json" 
+```
+
+To Update Enterprise by id, you can use the following `curl` command:
+
+```bash
+curl -X PUT http://localhost:3000/enterprises/1 \
+-H "Content-Type: application/json" \
+-d '{
+  "name": "Tech Corp",
+  "type": "Individual",
+  "taxId": "TEC900101XYZ"
+}'
+```
+
+To Find All Enterprises associated to a Party, you can use the following `curl` command:
+
+```bash
+curl -X GET http://localhost:3000/enterprises/1/parties \
+  -H "Content-Type: application/json"
+```
+
+#### Parties:
+
+
+To Create a Party, you can use the following `curl` command, you must provide an existing Enterprise:
+
+```bash
+curl -X POST http://localhost:3000/enterprises/1/parties \
+  -H "Content-Type: application/json" \
+  -d '{
+        "name": "John Doe"
+      }'
+```
+
+To Find All Parties associated to Enterprise `curl` command, you must provide an existing Enterprise:
+
+
+```bash
+curl -X GET http://localhost:3000/enterprises/1/parties \
+  -H "Content-Type: application/json" 
+```
 
 ## Resources
 
