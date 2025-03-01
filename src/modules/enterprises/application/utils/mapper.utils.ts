@@ -8,6 +8,7 @@ export default class MapperUtils {
       enterprise.id,
       enterprise.name,
       enterprise.type,
+      enterprise.parties,
       enterprise.taxId,
       enterprise.createdAt,
       enterprise.updatedAt,
