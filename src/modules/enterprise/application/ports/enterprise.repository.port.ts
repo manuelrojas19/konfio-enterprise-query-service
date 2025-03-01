@@ -1,4 +1,4 @@
-import { Enterprise } from 'src/enterprise/domain/models/entity/enterprise.entity';
+import { Enterprise } from 'src/modules/enterprise/domain/models/entity/enterprise.entity';
 
 export interface EnterpriseRepositoryPort {
   saveEnterprise(enterprise: Enterprise): Promise<Enterprise>;

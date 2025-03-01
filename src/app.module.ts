@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { EnterpriseModule } from './enterprise/enterprise.module';
+import { EnterpriseModule } from './modules/enterprise/enterprise.module';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './enterprise/infraestructure/config/database/database.module';
+import { DatabaseModule } from './config/database/database.module';
 
 @Module({
   imports: [

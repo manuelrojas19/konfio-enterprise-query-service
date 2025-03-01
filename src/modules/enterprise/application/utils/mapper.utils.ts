@@ -1,5 +1,5 @@
-import { EnterpriseDto } from 'src/enterprise/domain/models/dto/enterprise.dto';
-import { Enterprise } from 'src/enterprise/domain/models/entity/enterprise.entity';
+import { EnterpriseDto } from 'src/modules/enterprise/domain/models/dto/enterprise.dto';
+import { Enterprise } from 'src/modules/enterprise/domain/models/entity/enterprise.entity';
 
 export class MapperUtils {
   // Mapper function to convert from Entity to DTO

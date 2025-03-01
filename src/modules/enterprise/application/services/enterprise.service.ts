@@ -1,12 +1,12 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { EnterpriseRepositoryPort } from '../../application/ports/enterprise.repository.port';
+import { EnterpriseRepositoryPort } from '../ports/enterprise.repository.port';
 
 import { ValidationUtils } from '../utils/validations.utils';
 import {
   EnterpriseDto,
   EnterpriseType,
-} from 'src/enterprise/domain/models/dto/enterprise.dto';
-import { Enterprise } from 'src/enterprise/domain/models/entity/enterprise.entity';
+} from 'src/modules/enterprise/domain/models/dto/enterprise.dto';
+import { Enterprise } from 'src/modules/enterprise/domain/models/entity/enterprise.entity';
 import { MapperUtils } from '../utils/mapper.utils';
 
 @Injectable()
