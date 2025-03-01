@@ -16,7 +16,22 @@ export class PartyRepository implements PartyRepositoryPort {
   }
 
   async updateParty(party: Party): Promise<Party> {
-    return this.ormRepository.save(party); // TypeORM's `save()` updates if entity exists
+    // Find Existing party
+    const existingParty = await this.ormRepository.findOne({
+      where: { id: party.id },
+    });
+
+    // If the enterprise does not exist, throw an error
+    if (!existingParty) {
+      throw new Error(`Party with ID ${party.id} not found.`);
+    }
+
+    // Only update fields that need to be updated (e.g., name, type, taxId)
+    existingParty.name = party.name;
+    // Update the timestamp for the update
+    existingParty.updatedAt = new Date();
+
+    return this.ormRepository.save(existingParty); // TypeORM's `save()` updates if entity exists
   }
 
   async findAllPartiesByEnterpriseId(enterpriseId: string): Promise<Party[]> {

@@ -8,7 +8,7 @@ import {
 } from 'src/modules/enterprises/domain/models/dto/enterprise.dto';
 import { Enterprise } from 'src/modules/enterprises/domain/models/entity/enterprise.entity';
 import MapperUtils from '../utils/mapper.utils';
-
+import { UpdateEnterpriseDto } from '../../domain/models/dto/updateEnterprise.dto';
 
 @Injectable()
 export class EnterpriseService {
@@ -41,6 +41,34 @@ export class EnterpriseService {
     return MapperUtils.enterpriseEntityToDto(savedEnterprise);
   }
 
+  async updateEnterprise(
+    updateEnterpriseDto: UpdateEnterpriseDto,
+  ): Promise<EnterpriseDto> {
+    if (!ValidationUtils.isValidEnterpriseType(updateEnterpriseDto.type)) {
+      this.logger.error(
+        `Invalid enterpris while updating type: ${updateEnterpriseDto.type} for enterprise: ${updateEnterpriseDto.name}`,
+      );
+      throw new Error(`Invalid enterprise type: ${updateEnterpriseDto.type}`);
+    }
+
+    if (!ValidationUtils.isValidTaxId(updateEnterpriseDto.taxId)) {
+      this.logger.error(
+        `Invalid taxId: ${updateEnterpriseDto.taxId} for enterprise: ${updateEnterpriseDto.name}`,
+      );
+      throw new Error(`Invalid taxId: ${updateEnterpriseDto.taxId}`);
+    }
+
+    const adjustedEnterprise = new Enterprise(
+      updateEnterpriseDto.name,
+      updateEnterpriseDto.type as EnterpriseType,
+      updateEnterpriseDto.taxId,
+    );
+    adjustedEnterprise.id = updateEnterpriseDto.id;
+    const updatedEntity =
+      await this.enterpriseRepository.updateEnterprise(adjustedEnterprise);
+    return MapperUtils.enterpriseEntityToDto(updatedEntity);
+  }
+
   async findById(enterpriseId: string): Promise<EnterpriseDto | null> {
     const enterprise =
       await this.enterpriseRepository.findByEnterpriseId(enterpriseId);
@@ -57,7 +85,8 @@ export class EnterpriseService {
   }
 
   async findAllByPartyId(partyId: string): Promise<EnterpriseDto[] | null> {
-    const enterprises = await this.enterpriseRepository.findAllEnterprisesByPartyId(partyId);
+    const enterprises =
+      await this.enterpriseRepository.findAllEnterprisesByPartyId(partyId);
 
     // Map each enterprise entity to an EnterpriseDto
     return enterprises.map((e) => MapperUtils.enterpriseEntityToDto(e));

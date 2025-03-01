@@ -41,4 +41,5 @@ export class Enterprise {
     this.createdAt = new Date();
     this.updatedAt = new Date();
   }
+  
 }
