@@ -9,6 +9,7 @@ import {
 import { Enterprise } from 'src/modules/enterprises/domain/models/entity/enterprise.entity';
 import MapperUtils from '../utils/mapper.utils';
 import { UpdateEnterpriseDto } from '../../domain/models/dto/updateEnterprise.dto';
+import { CreateEnterpriseDto } from '../../domain/models/dto/createEnterprise.dto';
 
 @Injectable()
 export class EnterpriseService {
@@ -19,23 +20,27 @@ export class EnterpriseService {
   ) {}
 
   async createEnterprise(
-    name: string,
-    type: string,
-    taxId: string,
+    createEnterpriseDto: CreateEnterpriseDto,
   ): Promise<EnterpriseDto> {
-    if (!ValidationUtils.isValidEnterpriseType(type)) {
+    if (!ValidationUtils.isValidEnterpriseType(createEnterpriseDto.type)) {
       this.logger.error(
-        `Invalid enterprise type: ${type} for enterprise: ${name}`,
+        `Invalid enterprise type: ${createEnterpriseDto.type} for enterprise: ${name}`,
       );
-      throw new Error(`Invalid enterprise type: ${type}`);
+      throw new Error(`Invalid enterprise type: ${createEnterpriseDto.type}`);
     }
 
-    if (!ValidationUtils.isValidTaxId(taxId)) {
-      this.logger.error(`Invalid taxId: ${taxId} for enterprise: ${name}`);
-      throw new Error(`Invalid taxId: ${taxId}`);
+    if (!ValidationUtils.isValidTaxId(createEnterpriseDto.taxId)) {
+      this.logger.error(
+        `Invalid taxId: ${createEnterpriseDto.taxId} for enterprise: ${name}`,
+      );
+      throw new Error(`Invalid taxId: ${createEnterpriseDto.taxId}`);
     }
 
-    const newEnterprise = new Enterprise(name, type as EnterpriseType, taxId);
+    const newEnterprise = new Enterprise(
+      createEnterpriseDto.name,
+      createEnterpriseDto.type as EnterpriseType,
+      createEnterpriseDto.taxId,
+    );
     const savedEnterprise =
       await this.enterpriseRepository.saveEnterprise(newEnterprise);
     return MapperUtils.enterpriseEntityToDto(savedEnterprise);
@@ -92,4 +97,3 @@ export class EnterpriseService {
     return enterprises.map((e) => MapperUtils.enterpriseEntityToDto(e));
   }
 }
-
