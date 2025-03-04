@@ -1,6 +1,5 @@
-import { Injectable, OnModuleInit, Logger, Inject } from "@nestjs/common";
-import { ClientKafka } from "@nestjs/microservices";
-
+import { Injectable, OnModuleInit, Logger, Inject } from '@nestjs/common';
+import { ClientKafka } from '@nestjs/microservices';
 
 @Injectable()
 export class KafkaService implements OnModuleInit {
