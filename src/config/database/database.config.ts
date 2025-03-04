@@ -27,8 +27,10 @@ export const databaseConfigFactory = (
   entities: [Enterprise, Party],
   synchronize: true, // Disable in production, leave for testing purposes
   logging: true,
-  // TODO: check https://stackoverflow.com/questions/76899023/rds-while-connection-error-no-pg-hba-conf-entry-for-host for RDS SSL
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  ssl:
+    process.env.NODE_ENV === 'production'
+      ? {
+          rejectUnauthorized: false,
+        }
+      : false,
 });
