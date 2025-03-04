@@ -18,6 +18,7 @@ export class KafkaService implements OnModuleInit {
         await this.kafkaClient.connect();
         this.logger.log('Kafka started successfully');
       } catch (error) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         this.logger.error('Failed to connect to Kafka', error.stack);
       }
     } else {
