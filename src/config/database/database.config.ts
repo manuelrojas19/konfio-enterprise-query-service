@@ -25,6 +25,10 @@ export const databaseConfigFactory = (
   password: configService.get<string>('DATABASE_PASSWORD'),
   database: configService.get<string>('DATABASE_NAME'),
   entities: [Enterprise, Party],
-  synchronize: configService.get<string>('NODE_ENV') !== 'production', // Disable in production
+  synchronize: true, // Disable in production, leave for testing purposes
   logging: true,
+  // TODO: check https://stackoverflow.com/questions/76899023/rds-while-connection-error-no-pg-hba-conf-entry-for-host for RDS SSL
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
